@@ -1,18 +1,23 @@
-module(
-	input wire a
-	input wire b
-	input wire sel
-	output reg z
+module m1(
+	input wire x;
+	output wire y;
 );
 
-	always_comb begin
-		if (sel == 1b'0) begin
-			z = a;
-		end;
-		else begin
-			z = b;
-		end
-	end
+assign x = y;
 
-endmodule;
-	 
+endmodule
+
+module m2(
+	input wire a;
+	output wire b;
+);
+
+assign a = b;
+
+endmodule
+
+m1 mym1(.x(y);
+
+$display( //output of mym1)
+
+

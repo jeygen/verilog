@@ -4,6 +4,7 @@ Blocking assignment: =
 	outside or inside block for reg type
 	occurs as it appears
 	comb log as only depends on inputs
+	if in an always block, its sequential. maybe always sequential i think
 Non-Blocking: <=
 	after current time step 
 	inside always block

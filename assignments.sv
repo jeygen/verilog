@@ -4,6 +4,7 @@ Blocking assignment: =
 	outside or inside block for reg type
 	occurs as it appears
 	comb log as only depends on inputs
+	if in an always block, its sequential. maybe always sequential i think
 Non-Blocking: <=
 	after current time step 
 	inside always block
@@ -17,6 +18,13 @@ Reg
 	holds value
 Wire
 	does not hold value, ie continuous
+	
+	
+An 'assign' keyword statement is used for modeling only combinational logic and it is executed continuously. 
+So the assign statement is called 'continuous assignment statement' as there is no sensitive list.
+
+assign out = (enable) ? data : 1'bz;
+assign out = data;
 
 */
 

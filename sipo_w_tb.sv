@@ -1,11 +1,20 @@
 // Code a SIPO shift register, choose left, right or bi
     // set-up a tb for it
 
+    // Code a SIPO shift register, choose left, right or bi
+// set-up a tb for it
+
+// Code a SIPO shift register, choose left, right or bi
+// set-up a tb for it
+
+// Code a SIPO shift register, choose left, right or bi
+// set-up a tb for it
+
 module sipo_shift (
   input wire en,
   input wire clk,
   input wire sipo_in,
-  output reg [8-1:0] sipo_out
+  output wire [8-1:0] sipo_out
 );
 
   reg [8-1:0] buffer;
@@ -16,9 +25,7 @@ module sipo_shift (
     end
   end
 
-  always @(buffer) begin
-    sipo_out <= buffer;
-  end
+  assign sipo_out = buffer;
 
 endmodule
 
@@ -63,22 +70,11 @@ module sipo_shift_tb;
     #10;
 
     // Output monitoring
-    $display("sipo_out = %h", sipo_out);
+    $display("sipo_out in hex = %h, in bin = %b", sipo_out, sipo_out);
 
     // End simulation
     $finish;
   end
 
 endmodule
-
-// Instantiate the testbench
-sipo_shift_tb tb ();
-
-// Instantiate the DUT
-sipo_shift dut (
-  .en(tb.en),
-  .clk(tb.clk),
-  .sipo_in(tb.sipo_in),
-  .sipo_out(tb.sipo_out)
-);
 

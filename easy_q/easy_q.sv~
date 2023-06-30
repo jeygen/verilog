@@ -165,15 +165,17 @@ endmodule
 // Edge detector module
 module edge_detector (
     input wire clk, reset, in,  // Clock, reset, and input signal
-    output reg pulse            // Output pulse
-);
-    reg in_d;  // Delayed version of 'in'
+    output reg pulse            // Output pulse );
+    reg in_d;  // Delayed version of 'in', tracks prev cycle val of in
+
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             in_d <= 0;
             pulse <= 0;
         end else begin
+			// in_d holds prev val to compare to, AND operator to ensure they
+			// are opposites 
             pulse <= in & ~in_d;
             in_d <= in;
         end

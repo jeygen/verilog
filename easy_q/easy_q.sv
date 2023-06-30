@@ -11,6 +11,7 @@
 
 // Edge Detector: Design a Verilog module that takes a clock and a single bit input, and 
 // generates a single cycle pulse whenever the input changes from 0 to 1 (a rising edge)
+// use clk
 
 // Frequency Divider: Write a Verilog module that divides the input frequency by a given 
 // factor. The module should take a clock (of frequency f) and a reset signal as inputs, 

@@ -12,7 +12,7 @@ SIM_OPTIONS = -o
 
 #.PHONY: all clean
 
-all: $(OUTPUTS)
+#all: $(OUTPUTS)
 
 %.vpp: %.sv
 	$(SIMULATOR) $(SIM_OPTIONS) $@ $<

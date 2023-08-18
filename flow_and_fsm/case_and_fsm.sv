@@ -1,4 +1,4 @@
-// Basuc Case
+// Basic Case
 
 module my_module(input [1:0] sel, input [7:0] data_in, output [7:0] data_out);
   // Input sel is a 2-bit selector for the operation to be performed
@@ -146,3 +146,93 @@ always @(state or in) begin
 end
 
 endmodule
+
+// Another simple FSM
+always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) current_state <= IDLE;
+    else current_state <= next_state;
+end
+
+always_comb begin
+    case (current_state)
+        IDLE:   next_state = START;
+        START:  next_state = RUN;
+        RUN:    next_state = STOP;
+        STOP:   next_state = IDLE;
+        default: next_state = IDLE;
+    endcase
+end
+
+//// better form to have ff and comb blocks
+//// Moore FSM: Output depends on current state
+//// Mealy FSM: Output depends on current state and inputs
+//// D-Flip Flop is D = Input/Next State, Q = Current State
+
+/// Moore
+typedef enum {IDLE, GOT_1, DONE} moore_state_e;
+moore_state_e current_state, next_state;
+
+// Output declaration
+logic dout;
+
+// Sequential Logic (flip-flop) - State Update
+always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) current_state <= IDLE;
+    else current_state <= next_state;
+end
+
+// Combinational Logic - Next State and Output Logic
+always_comb begin
+    next_state = current_state;
+    dout = 0;  // default output value
+
+    case (current_state)
+        IDLE:   if (din) next_state = GOT_1;
+
+        GOT_1:  begin
+            if (!din) begin
+                next_state = DONE;
+                dout = 1;  // This is a Moore machine, so the output is set based on state
+            end else begin
+                next_state = IDLE;
+            end
+        end
+
+        DONE:   if (din) next_state = GOT_1;
+
+        default: next_state = IDLE;
+    endcase
+end
+
+/// Mealy
+typedef enum {IDLE, GOT_0} mealy_state_e;
+mealy_state_e current_state, next_state;
+
+// Output declaration
+logic dout;
+
+// Sequential Logic (flip-flop) - State Update
+always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) current_state <= IDLE;
+    else current_state <= next_state;
+end
+
+// Combinational Logic - Next State and Output Logic
+always_comb begin
+    next_state = current_state;
+    dout = 0;  // default output value
+
+    case (current_state)
+        IDLE:   if (!din) next_state = GOT_0;
+
+        GOT_0:  begin
+            if (din) begin
+                dout = 1;  // Mealy machine, output is set based on input transition
+            end
+            next_state = din ? IDLE : GOT_0;
+        end
+
+        default: next_state = IDLE;
+    endcase
+end
+

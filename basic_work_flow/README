@@ -1,0 +1,11 @@
+make verilog files
+
+compile with:
+iverilog -o half_adder_sim half_adder.v half_adder_tb.v
+
+run sim:
+vvp half_adder_sim
+
+view waves:
+gtkwave half_adder_wave.vcd
+
